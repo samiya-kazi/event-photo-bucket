@@ -8,18 +8,18 @@ import ProtectedRoute from './Components/ProtectedRoute';
 function App() {
 
   return (
-    <Router>
-      <Routes>
-        <Route path='/login' element={<LoginPage />} />
-        <Route path='/' element={<ProtectedRoute>
-        </ProtectedRoute>}>
-          <Route path='/camera' element={<CameraPage />} />
-          <Route path='/gallery' element={<GalleryPage />} />
-          <Route path='*' element={<Navigate to="/camera" />} />
-        </Route>
-        <Route path='*' element={<Navigate to="/" />} />
-      </Routes>
-    </Router>
+      <Router>
+        <Routes>
+          <Route path='/login' element={<LoginPage />} />
+          <Route path='/' element={<ProtectedRoute>
+          </ProtectedRoute>}>
+            <Route path='/camera' element={<CameraPage />} />
+            <Route path='/gallery' element={<GalleryPage />} />
+            <Route path='*' element={<Navigate to="/camera" />} />
+          </Route>
+          <Route path='*' element={<Navigate to="/" />} />
+        </Routes>
+      </Router>
   )
 }
 
