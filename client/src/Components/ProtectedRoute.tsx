@@ -6,8 +6,9 @@ function ProtectedRoute() {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('google-token');
-    if (!token) setIsAuthenticated(false);
+    const id = localStorage.getItem('fb-id');
+    console.log(id)
+    if (!id) setIsAuthenticated(false);
   }, []);
   
   return (

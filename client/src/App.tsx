@@ -11,8 +11,7 @@ function App() {
       <Router>
         <Routes>
           <Route path='/login' element={<LoginPage />} />
-          <Route path='/' element={<ProtectedRoute>
-          </ProtectedRoute>}>
+          <Route path='/' element={<ProtectedRoute/>}>
             <Route path='/camera' element={<CameraPage />} />
             <Route path='/gallery' element={<GalleryPage />} />
             <Route path='*' element={<Navigate to="/camera" />} />
