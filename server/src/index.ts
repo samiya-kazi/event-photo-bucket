@@ -2,12 +2,19 @@ import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import config from './config';
+import userRouter from './routers/user.router';
+import photoRouter from './routers/photo.router';
 
 const app = express();
 
 app.use(cors({
-  origin: config.CORS_ORIGIN
+  origin: config.CORS_ORIGIN,
+  credentials: true,
+  exposedHeaders: ["Authorization"],
 }));
+
+app.use('/user', userRouter);
+app.use('/photos', photoRouter);
 
 (async function bootstrap() {
   try {
