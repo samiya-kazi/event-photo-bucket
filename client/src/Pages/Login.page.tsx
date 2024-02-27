@@ -1,43 +1,34 @@
-import ReactFacebookLogin, { ReactFacebookFailureResponse, ReactFacebookLoginInfo } from "react-facebook-login";
-import config from "../config";
+
 import { useNavigate } from "react-router";
 import { useEffect } from "react";
 import { login } from "../Services/api.service";
+import { UserCredential, signInWithPopup } from "firebase/auth";
+import { auth, facebook } from "../Services/firebase.service";
 
 function LoginPage() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const id = localStorage.getItem('fb-id');
-    console.log(id)
-    if (id) navigate('/camera');
-  }, [])
-
-  function validateLoginInfo (data: any) : data is ReactFacebookLoginInfo {
-    return  typeof data === 'object' && typeof data.name === 'string' && typeof data.id === 'string';
-  }
-
-  const responseFacebook = async (response: ReactFacebookLoginInfo | ReactFacebookFailureResponse) => {
-    if (validateLoginInfo(response)) {
-      const successfulResponse = response as ReactFacebookLoginInfo;
-      const { name, id } = successfulResponse;
-
-      await login(id, name!);
+  const handleLogin = async (provider: any) => {
+    try {
+      const result: UserCredential = await signInWithPopup(auth, provider);
+      const id = result.user.providerData[0].uid;
+      const name = result.user.displayName ?? "Guest";
+      await login(id, name);
       navigate('/camera');
-    } else {
-     console.log('Facebook login error:', response); 
+    } catch (e) {
+      //handle the error when login fails
+      console.log(`login error ${e}`);
     }
   }
 
-  return (
-    <ReactFacebookLogin
-      appId={config.FB_APP_ID}
-      autoLoad={false}
-      callback={responseFacebook}
-    >
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) navigate('/camera');
+  }, [])
 
-    </ReactFacebookLogin>
+  return (
+    <button onClick={() => handleLogin(facebook)}>Login with Facebook</button>
   )
 }
 
