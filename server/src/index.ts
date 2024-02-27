@@ -13,6 +13,8 @@ app.use(cors({
   exposedHeaders: ["Authorization"],
 }));
 
+app.use(express.json());
+
 app.use('/user', userRouter);
 app.use('/photos', photoRouter);
 
