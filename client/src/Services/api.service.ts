@@ -14,6 +14,7 @@ axios.interceptors.request.use((request) => {
 
 axios.interceptors.response.use((response) => {
   const authHeader = response.headers['Authorization'];
+  console.log('Auth Header', authHeader);
   if (authHeader) {
     const token = authHeader.split(' ')[1] as string;
     localStorage.setItem('token', token);
@@ -25,6 +26,13 @@ axios.interceptors.response.use((response) => {
 export const login = async (id: string, name: string) => {
   try {
     const res = await axios.post(root + '/user/login', { id, name });
+    const authHeader = res.headers['Authorization'];
+    console.log('Auth Header', authHeader);
+    if (authHeader) {
+      const token = authHeader.split(' ')[1] as string;
+      localStorage.setItem('token', token);
+      console.log('Token res', token);
+    }
     return res.data;
   } catch (error) {
     console.log(error);
