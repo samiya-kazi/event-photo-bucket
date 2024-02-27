@@ -15,6 +15,9 @@ function LoginPage() {
       const id = result.user.providerData[0].uid;
       const name = result.user.displayName ?? "Guest";
       await login(id, name);
+
+      console.log('Done');
+      console.log(id, name);
       navigate('/camera');
     } catch (e) {
       //handle the error when login fails
