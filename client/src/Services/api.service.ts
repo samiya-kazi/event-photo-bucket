@@ -5,6 +5,7 @@ const root = config.API_URL;
 
 axios.interceptors.request.use((request) => {
   const token = localStorage.getItem('token');
+  console.log('Token', token);
   if (token && request.url?.includes(root)) 
     request.headers.Authorization = `Bearer ${token}`;
 
@@ -16,6 +17,7 @@ axios.interceptors.response.use((response) => {
   if (authHeader) {
     const token = authHeader.split(' ')[1] as string;
     localStorage.setItem('token', token);
+    console.log('Token res', token);
   }
   return response;
 });
