@@ -6,9 +6,9 @@ function ProtectedRoute() {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
 
   useEffect(() => {
-    const id = localStorage.getItem('fb-id');
-    console.log(id)
-    if (!id) setIsAuthenticated(false);
+    const token = localStorage.getItem('token');
+    console.log(token)
+    if (!token) setIsAuthenticated(false);
   }, []);
   
   return (

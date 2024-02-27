@@ -2,6 +2,7 @@ import ReactFacebookLogin, { ReactFacebookFailureResponse, ReactFacebookLoginInf
 import config from "../config";
 import { useNavigate } from "react-router";
 import { useEffect } from "react";
+import { login } from "../Services/api.service";
 
 function LoginPage() {
 
@@ -17,13 +18,12 @@ function LoginPage() {
     return  typeof data === 'object' && typeof data.name === 'string' && typeof data.id === 'string';
   }
 
-  const responseFacebook = (response: ReactFacebookLoginInfo | ReactFacebookFailureResponse) => {
+  const responseFacebook = async (response: ReactFacebookLoginInfo | ReactFacebookFailureResponse) => {
     if (validateLoginInfo(response)) {
       const successfulResponse = response as ReactFacebookLoginInfo;
       const { name, id } = successfulResponse;
 
-      console.log(name, id);
-      localStorage.setItem('fb-id', id);
+      await login(id, name!);
       navigate('/camera');
     } else {
      console.log('Facebook login error:', response); 
